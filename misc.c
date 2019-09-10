@@ -4,10 +4,11 @@
 struct ITEM_LIST *list_sort(struct ITEM_LIST *list)
 {
 	struct ITEM_LIST *end = list;
+    struct ITEM_LIST *sorted;
 	struct ITEM_LIST *a;
 	struct ITEM_LIST *b;
-	void *aptr;
-	void *bptr;
+	char *aptr;
+	char *bptr;
 	int size = 0;
 	int i;
 
@@ -42,11 +43,25 @@ struct ITEM_LIST *list_sort(struct ITEM_LIST *list)
 	b = list_sort(b);
 
 	// Merge a and b
+    sorted = malloc(sizeof(struct ITEM_LIST *));
 	while (a != NULL && b != NULL) {
 		if (*(a->sptr) == 'd')
-			aptr = (struct DIR *)(a->sptr);
+			aptr = ((struct DIR *)(a->sptr))->name;
 		else
-			aptr 
+			aptr = ((struct FILE *)(a->sptr))->name;
+
+        if (*(b->sptr) == 'd')
+            bptr = ((struct DIR *)(b->sptr))->name;
+        else
+            bptr = ((struct FILE *)(b->sptr))->name;
+
+        if (strcmp(aptr, bptr) > 0)
+            sorted = a;
+        else
+            sorted = b;
+        sorted->next = malloc(sizeof(struct ITEM_LIST *));
+        sorted = sorted->next;
+    }
 
 	printf("Length: %d\n", size);
 

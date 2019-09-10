@@ -1,6 +1,6 @@
-CC	:= clang 
+CC	:= gcc
 
-TARGET	:= shell 
+TARGET	:= shell
 
 SRC	:= main.c
 SRC 	+= file.c
