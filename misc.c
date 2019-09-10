@@ -6,6 +6,8 @@ struct ITEM_LIST *list_sort(struct ITEM_LIST *list)
 	struct ITEM_LIST *end = list;
 	struct ITEM_LIST *a;
 	struct ITEM_LIST *b;
+	void *aptr;
+	void *bptr;
 	int size = 0;
 	int i;
 
@@ -20,18 +22,31 @@ struct ITEM_LIST *list_sort(struct ITEM_LIST *list)
 		size++;
 	}
 
-	a
+	// Make a the first half of list
+	a = NULL;
 	end = list;
 	for (i = 0; i < size/2; i++) {
 		a = end;
 		end = end->next;
 	}
 
+	// Make b the later half of list
 	b = NULL;
 	while (end != NULL) {
 		b = end;
 		end = end->next;
 	}
+
+	// Merge sort a and b
+	a = list_sort(a);
+	b = list_sort(b);
+
+	// Merge a and b
+	while (a != NULL && b != NULL) {
+		if (*(a->sptr) == 'd')
+			aptr = (struct DIR *)(a->sptr);
+		else
+			aptr 
 
 	printf("Length: %d\n", size);
 
