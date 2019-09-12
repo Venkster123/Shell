@@ -3,69 +3,115 @@
 // Merge sort an item list (lexicographic order)
 struct ITEM_LIST *list_sort(struct ITEM_LIST *list)
 {
+	static int counter = 0;
 	struct ITEM_LIST *end = list;
-    struct ITEM_LIST *sorted;
-	struct ITEM_LIST *a;
-	struct ITEM_LIST *b;
+	struct ITEM_LIST *a = NULL;
+	struct ITEM_LIST *b = NULL;
+	struct ITEM_LIST *sorted;
+	struct ITEM_LIST *start;
 	char *aptr;
 	char *bptr;
-	int size = 0;
+	int size;
 	int i;
 
+	counter++;
+	if (counter > 25)
+		return NULL;
+
 	if (list == NULL) {
+		printf("Empty list\n");
 		return NULL;
 	} else if (list->next == NULL) {
+		printf("One element list\n");
 		return list;
 	}
 
-	while (end != NULL) {
-		end = end->next;
-		size++;
-	}
+	printf("LISTING:\n");
+	
+	// Find the size of the list
+	size = length(list);
 
-	// Make a the first half of list
-	a = NULL;
+	printf("Length of list: %d\n", size);
+
+	// Split the list into a and b
+	a = list;
+	start = a;
 	end = list;
-	for (i = 0; i < size/2; i++) {
+	i = 0;
+	while (i < size/2) {
+		end = end->next;
 		a = end;
-		end = end->next;
+		a->next = NULL;
+		a = a->next;
+		i++;
 	}
+	
+	a = NULL;
+	a = start;
+	b = end;
 
-	// Make b the later half of list
-	b = NULL;
-	while (end != NULL) {
-		b = end;
-		end = end->next;
-	}
+	printf("Length of a: %d, b: %d\n", length(a), length(b));
+
+	if (a == NULL)
+		printf("list a is now null\n");
+	if (b == NULL)
+		printf("list b is now null\n");
 
 	// Merge sort a and b
 	a = list_sort(a);
 	b = list_sort(b);
 
-	// Merge a and b
-    sorted = malloc(sizeof(struct ITEM_LIST *));
-	while (a != NULL && b != NULL) {
+	// Merge lists a and b
+	list = sorted;
+	while (a != NULL & b != NULL) {
+		sorted = malloc(sizeof(struct ITEM_LIST));
+
 		if (*(a->sptr) == 'd')
 			aptr = ((struct DIR *)(a->sptr))->name;
 		else
-			aptr = ((struct FILE *)(a->sptr))->name;
+			aptr = ((struct DIR *)(a->sptr))->name;
 
-        if (*(b->sptr) == 'd')
-            bptr = ((struct DIR *)(b->sptr))->name;
-        else
-            bptr = ((struct FILE *)(b->sptr))->name;
+		if (*(b->sptr) == 'd')
+			bptr = ((struct DIR *)(b->sptr))->name;
+		else
+			bptr = ((struct DIR *)(b->sptr))->name;
 
-        if (strcmp(aptr, bptr) > 0)
-            sorted = a;
-        else
-            sorted = b;
-        sorted->next = malloc(sizeof(struct ITEM_LIST *));
-        sorted = sorted->next;
-    }
+		printf("aptr: %s, bptr: %s", aptr, bptr);
 
-	printf("Length: %d\n", size);
+		if (strcmp(aptr, bptr) > 0) {
+			sorted = b;
+			b = b->next;
+		} else {
+			sorted = a;
+			a = a->next;
+		}
+		
+		sorted = sorted->next;
+	}
 
-	return NULL;
+	// Add tails of a or b
+	printf("Adding remnants of list a\n");
+	i = 0;
+	while (a != NULL) {
+		sorted = malloc(sizeof(struct ITEM_LIST));
+		sorted = a;
+		a = a->next;
+		sorted = sorted->next;
+		i++;
+	}
+	printf("%d elements in a were remaining\n", i);
+
+	printf("Adding remnants of list b\n");
+	i = 0;
+	while (b != NULL) {
+		sorted = malloc(sizeof(struct ITEM_LIST));
+		sorted = b;
+		b = b->next;
+		sorted = sorted->next;
+	}
+	printf("%d elements in a were remaining\n", i);
+
+	return list;
 }
 
 // Check if item with name exists in current directory
@@ -99,4 +145,45 @@ void *search(struct DIR *curr, char *name)
 struct ITEM_LIST *get(struct DIR *curr, char *path)
 {
 	return NULL;
+}
+
+// Return the number of items in the list
+int length(struct ITEM_LIST *list)
+{
+	struct ITEM_LIST *end = list;
+	int i = 0;
+
+	while (end != NULL) {
+		end = end->next;
+		i++;
+	}
+
+	return i;
+}
+
+// Print the items in the passed ITEM_LIST
+void print(struct ITEM_LIST *list)
+{
+	struct ITEM_LIST *head = list;
+	struct FILE *file;
+	struct DIR *dir;
+	bool end = false;
+
+	while (head != NULL) {
+		if (head->next == NULL)
+			end = true;
+
+		switch(*(head->sptr)) {
+		case 'd':
+			dir = (struct DIR *) head->sptr;
+			printf("%s%c", dir->name, (end) ? '\n' : '\t');
+			break;
+		case 'f':
+			file = (struct FILE *) head->sptr;
+			printf("%s%c", file->name, (end) ? '\n' : '\t');
+			break;
+		}
+
+		head = head->next;
+	}
 }
