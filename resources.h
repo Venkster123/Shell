@@ -49,3 +49,4 @@ extern void append(struct DIR *, char *);
 extern struct DIR *parser(struct DIR *, struct DIR *, char *);
 extern struct DIR *cd(struct DIR *, char *);
 extern struct ITEM_LIST *list_sort(struct ITEM_LIST *);
+extern int length(struct ITEM_LIST *);
