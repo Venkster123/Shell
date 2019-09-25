@@ -4,53 +4,50 @@
 struct ITEM_LIST *list_sort(struct ITEM_LIST *list)
 {
 	struct ITEM_LIST *end = list;
+	struct ITEM_LIST *tail;
 	struct ITEM_LIST *a;
 	struct ITEM_LIST *b;
-	void *aptr;
-	void *bptr;
-	int size = 0;
+	int size;
 	int i;
 
-	if (list == NULL) {
-		return NULL;
-	} else if (list->next == NULL) {
+	if (list == NULL)
+			return NULL;
+	else if (list->next == NULL)
 		return list;
-	}
 
-	while (end != NULL) {
-		end = end->next;
-		size++;
-	}
+	size = length(list);
 
-	// Make a the first half of list
-	a = NULL;
-	end = list;
 	for (i = 0; i < size/2; i++) {
-		a = end;
-		end = end->next;
+		if (a == NULL) {
+			a = malloc(sizeof(struct ITEM_LIST));
+			a->sptr = b->sptr;
+			a->next = NULL;
+			tail = a;
+		} else {
+			tail->next = malloc(sizeof(struct ITEM_LIST));
+			tail = tail->next;
+			tail->sptr = end->sptr;
+			tail->next = NULL;
+		}
 	}
 
-	// Make b the later half of list
-	b = NULL;
+	/*b = malloc(sizeof(struct ITEM_LIST));
+	start = b;
 	while (end != NULL) {
-		b = end;
+		if (start == NULL)
+			start = malloc(sizeof(struct ITEM_LIST));
+		start->sptr = end->sptr;
+		start = start->next;
 		end = end->next;
-	}
+	}*/
+	b = end;
 
-	// Merge sort a and b
-	a = list_sort(a);
-	b = list_sort(b);
+	printf("__LIST(A)__\n");
+	print(a);
+	printf("__LIST(B)__\n");
+	print(b);
 
-	// Merge a and b
-	while (a != NULL && b != NULL) {
-		if (*(a->sptr) == 'd')
-			aptr = (struct DIR *)(a->sptr);
-		else
-			aptr 
-
-	printf("Length: %d\n", size);
-
-	return NULL;
+	return list;
 }
 
 // Check if item with name exists in current directory
@@ -58,7 +55,7 @@ void *search(struct DIR *curr, char *name)
 {
 	struct ITEM_LIST *head = curr->list;
 	struct DIR *dir;
-	struct FILE *file;
+	struct FIL *FIL;
 
 	while (head != NULL) {
 		switch(*(head->sptr)) {
@@ -68,9 +65,9 @@ void *search(struct DIR *curr, char *name)
 				return dir;
 			break;
 		case 'f':
-			file = (struct FILE *) head->sptr;
-			if (strcmp(file->name, name) == 0)
-				return file;
+			FIL = (struct FIL *) head->sptr;
+			if (strcmp(FIL->name, name) == 0)
+				return FIL;
 			break;
 		}
 
@@ -84,4 +81,45 @@ void *search(struct DIR *curr, char *name)
 struct ITEM_LIST *get(struct DIR *curr, char *path)
 {
 	return NULL;
+}
+
+// Return the number of items in the list
+int length(struct ITEM_LIST *list)
+{
+	struct ITEM_LIST *end = list;
+	int i = 0;
+
+	while (end != NULL) {
+		end = end->next;
+		i++;
+	}
+
+	return i;
+}
+
+// Print the items in the passed ITEM_LIST
+void print(struct ITEM_LIST *list)
+{
+	struct ITEM_LIST *head = list;
+	struct FIL *FIL;
+	struct DIR *dir;
+	bool end = false;
+
+	while (head != NULL) {
+		if (head->next == NULL)
+			end = true;
+
+		switch(*(head->sptr)) {
+		case 'd':
+			dir = (struct DIR *) head->sptr;
+			printf("%s%c", dir->name, (end) ? '\n' : '\t');
+			break;
+		case 'f':
+			FIL = (struct FIL *) head->sptr;
+			printf("%s%c", FIL->name, (end) ? '\n' : '\t');
+			break;
+		}
+
+		head = head->next;
+	}
 }

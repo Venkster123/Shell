@@ -68,33 +68,6 @@ void append(struct DIR *curr, char *item)
 	}
 }
 
-// List directory command from linux
-void list_directory(struct DIR *curr)
-{
-	struct ITEM_LIST *head = curr->list;
-	struct FILE *file;
-	struct DIR *dir;
-	bool end = false;
-
-	while (head != NULL) {
-		if (head->next == NULL)
-			end = true;
-
-		switch(*(head->sptr)) {
-		case 'd':
-			dir = (struct DIR *) head->sptr;
-			printf("%s%c", dir->name, (end) ? '\n' : '\t');
-			break;
-		case 'f':
-			file = (struct FILE *) head->sptr;
-			printf("%s%c", file->name, (end) ? '\n' : '\t');
-			break;
-		}
-
-		head = head->next;
-	}
-}
-
 // Change directory function
 struct DIR *cd(struct DIR *curr, char *new)
 {
@@ -110,4 +83,10 @@ struct DIR *cd(struct DIR *curr, char *new)
 	}
 
 	return NULL;
+}
+
+// List directory command from linux
+void list_directory(struct DIR *curr)
+{
+	print(curr->list);
 }

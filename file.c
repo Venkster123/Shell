@@ -1,10 +1,10 @@
 #include "resources.h"
 
 // Function for creating files
-struct FILE *touch(struct DIR *curr, char *name)
+struct FIL *touch(struct DIR *curr, char *name)
 {
 	void append(struct DIR *, char *);
-	struct FILE *file;
+	struct FIL *file;
 
 	if (curr == NULL) {
 		printf("touch: cannot create a file in a non-existent directory\n");
@@ -14,7 +14,7 @@ struct FILE *touch(struct DIR *curr, char *name)
 		return NULL;
 	}
 
-	file = malloc(sizeof(struct FILE));
+	file = malloc(sizeof(struct FIL));
 	file->name = name;
 	file->tag = 'f';
 
@@ -25,7 +25,7 @@ struct FILE *touch(struct DIR *curr, char *name)
 }
 
 // Function for writing files
-void _write(struct FILE *file)
+void _write(struct FIL *file)
 {
 	if (file->name == NULL)
 		printf("Program Error:\t Opening an unnamed file\n");

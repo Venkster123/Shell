@@ -11,7 +11,7 @@
 #define NAME_BUF_SIZE 1000
 
 // Define the file structure
-struct FILE {
+struct FIL {
 	char tag;
 	char *file;
 	char *name;
@@ -41,7 +41,7 @@ struct ARGS {
 
 // Functions
 extern struct DIR *mkdir(struct DIR *, struct ITEM_LIST *, char *);
-extern struct FILE *touch(struct DIR *, char *);
+extern struct FIL *touch(struct DIR *, char *);
 
 extern void list_directory(struct DIR *);
 extern void *search(struct DIR *, char *);
@@ -49,3 +49,5 @@ extern void append(struct DIR *, char *);
 extern struct DIR *parser(struct DIR *, struct DIR *, char *);
 extern struct DIR *cd(struct DIR *, char *);
 extern struct ITEM_LIST *list_sort(struct ITEM_LIST *);
+extern int length(struct ITEM_LIST *);
+extern void print(struct ITEM_LIST *);
