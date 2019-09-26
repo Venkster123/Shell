@@ -1,9 +1,14 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <assert.h>
+#include <string.h>
 
-enum headers {FILE_H = 0xf, DIR_H = 0xe};
+// Re-used constants
+enum header_t {FILE_H = 0x0, DIR_H = 0x1};
+enum system_t {NORMAL = 0x0, QUIT = 0x1};
 
+// Data structures
 struct date {
     __uint8_t year;
     __uint8_t month;
@@ -30,3 +35,10 @@ struct list {
     struct item *curr;
     struct list *next;
 };
+
+// System status variables
+__uint8_t status = NORMAL;
+
+// Functions
+extern struct list *init(struct item *);
+extern struct list *append(struct list *, struct list *);
