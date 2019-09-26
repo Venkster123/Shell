@@ -1,0 +1,5 @@
+Goals:
+ - Change the window screen (from stdscr)
+ - Add colors
+ - Add new window options and graphical interactions
+ - New language
