@@ -1,17 +1,28 @@
 #include <ncurses.h>
-#include <stdio.h>
 
 int main()
 {
-    char c;
+	int ch;
 
-    WINDOW *win = newwin(20, 20, 100, 100);
+	initscr();
+	raw();
+	keypad(stdscr, TRUE);
+	noecho();
 
-    initscr();
-    wprintw(win, "Press a key to exit the shell\n");
-    while((c = getch())) {
-	 waddch(win, c | A_BOLD);
-    }
-    endwin();
-    return 0;
+	printw("Type any character to see it in bold\n");
+	ch = getch();
+
+	if (ch == KEY_F(1)) {
+		printw("F1 Key pressed");
+	} else {
+		printw("The pressed key is ");
+		attron(A_BOLD | A_UNDERLINE);
+		printw("%c", ch);
+	}
+
+	refresh();
+	getch();
+	endwin();
+
+	return 0;
 }

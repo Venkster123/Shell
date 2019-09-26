@@ -1,0 +1,13 @@
+For ncurses library: 
+
+	-lncurses (after)
+
+For opengl library:
+
+	-lglut (after)
+	-lGL (after)
+
+	If display error occurs
+	check to see if Xming is
+	functioning properly (try
+	reinstalling it)
