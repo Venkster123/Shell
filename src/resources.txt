@@ -1,0 +1,3 @@
+Links:
+
+https://learnopengl.com/book/offline%20learnopengl.pdf

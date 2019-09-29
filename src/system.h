@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#include <ncurses.h>
+#include <panel.h>
 
 // Re-used constants
 enum header_t {FILE_H = 0x0, DIR_H = 0x1};
@@ -37,7 +39,7 @@ struct list {
 };
 
 // System status variables
-__uint8_t status = NORMAL;
+extern __uint8_t status;
 
 // Functions
 extern struct list *init(struct item *);

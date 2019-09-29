@@ -1,8 +1,7 @@
-#include <ncurses.h>
 #include "system.h"
 
 // Import global system variables
-extern __uint8_t status;
+__uint8_t status = NORMAL;
 
 int main()
 {
