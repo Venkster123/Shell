@@ -3,3 +3,4 @@ Goals:
  - Add colors
  - Add new window options and graphical interactions
  - New language
+ - Add Zhetapi

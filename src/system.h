@@ -9,6 +9,7 @@
 // Re-used constants
 enum header_t {FILE_H = 0x0, DIR_H = 0x1};
 enum system_t {NORMAL = 0x0, QUIT = 0x1};
+enum limits_t {LINE_BUF_SIZE = 0x0};
 
 // Data structures
 struct date {
