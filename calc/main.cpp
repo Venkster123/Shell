@@ -26,12 +26,16 @@ public:
 	operand(double);
 
 	types type;
+
+	friend class operation;
 };
 
 class operation {
 	string rep;
+	void func(
 public:
 	operation();
+	operation(int 
 
 	operand &get(const operand &, const operand &);
 };
@@ -39,9 +43,11 @@ public:
 int main()
 {
 	operand *num;
+	int rnum;
 	int i;
 
 	for (i = 0; i < SES_LEN; i++) {
-
+		rnum = rand() % MOD;
+		cout << "Number generated: " << rnum << endl;
 	}
 }
