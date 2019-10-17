@@ -2,10 +2,12 @@ CC	:= gcc
 
 TARGET	:= shell
 
-SRC	:= shell.c
+SRC	:= main.c
 SRC	+= list.c
 SRC	+= file.c
 SRC	+= dir.c
+SRC	+= parser.c
+SRC	+= window.c
 
 FLAGS := -lncurses
 
