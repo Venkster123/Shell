@@ -7,7 +7,7 @@ struct item *mkdir(struct item *curr, struct list *items, char *name)
 
 	// Add intializing directory with (items) later
 	if (list != NULL) {
-		wprtinw(window, "Currently no support for intended action.\n");
+		wprintw(window, "Currently no support for intended action.\n");
 		return NULL;
 	}
 
@@ -43,7 +43,7 @@ struct item *mkdir(struct item *curr, struct list *items, char *name)
 	if (curr != NULL) {
 		temp = init(dir);
 		append(curr->items, temp);
-		sort(curr->list);
+		sort(curr->items);
 	}
 
 	return dir;

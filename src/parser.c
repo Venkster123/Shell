@@ -47,9 +47,9 @@ struct args *flags(char *line)
 	return flags;
 }
 
-struct item *parser(WINDOW *win, char *input)
+struct item *parser(char *input)
 {
-	wprintw(win, "Parsed\n");
+	wprintw(window, "Parsed\n");
 
 	return NULL;
 }

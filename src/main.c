@@ -8,7 +8,8 @@ int main()
 	// Start the shell with root
 	struct item *root = mkdir(NULL, NULL, "~");
 	struct item *curr = root;
-	struct *name = "shell';
+	struct item *dir;
+	char *name = "shell";
 	char *input;
 	
 	window = stdscr;
@@ -20,10 +21,10 @@ int main()
 		input = get();
 		dir = parser(input);
 
-		if (dir != NULL && dir->header == HEADER_H)
+		if (dir != NULL && dir->header == DIR_H)
 			curr = dir;
 	}
 
 	delwin(window);
-	endwin(window);
+	endwin();
 }

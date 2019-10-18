@@ -2,10 +2,10 @@
 
 void setup()
 {
-	initscr(win);
-	noecho(win);
-	keypad(win, TRUE);
-	scrollok(win, TRUE);
+	noecho();
+	initscr();
+	keypad(window, TRUE);
+	scrollok(window, TRUE);
 }
 
 char *get()
@@ -22,7 +22,7 @@ char *get()
 	while ((c = wgetch(window)) != EOF) {	
 		switch(c) {
 		case '\n':
-			addch(window, c);
+			waddch(window, c);
 			*input = '\0';
 			return start;
 		case KEY_BACKSPACE: case KEY_DC:
