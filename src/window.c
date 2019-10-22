@@ -1,14 +1,6 @@
 #include "system.h"
 
-void setup()
-{
-	noecho();
-	initscr();
-	keypad(window, TRUE);
-	scrollok(window, TRUE);
-}
-
-char *get()
+char *get(WINDOW *window)
 {
 	__uint32_t counter;
 	char *input;
@@ -29,6 +21,7 @@ char *get()
 			if (counter > 0) {
 				printw("\b \b");
 				counter--;
+				input--;
 			}
 			break;
 		default:

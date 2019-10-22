@@ -9,6 +9,7 @@
 #include <ncurses.h>
 #include <panel.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 // Re-used constants
 enum header_t {
@@ -67,15 +68,13 @@ struct list {
 
 // System status variables
 extern __uint8_t status;
-extern WINDOW *window;
 
 // parser.c functions
-extern struct item *parser(char *);
-extern struct args *flags(char *);
+extern struct item *parser(WINDOW *, struct item *, struct item *, char *);
+extern struct args *flags(WINDOW *, char *);
 
 // window.c functions
-extern void setup();
-extern char *get();
+extern char *get(WINDOW *);
 
 // list.c functions
 extern void sort(struct list *);
@@ -83,6 +82,8 @@ extern struct list *init(struct item *);
 extern void append(struct list *, struct list *);
 
 // dir.c functions
-extern struct item *mkdir (struct item *, struct list *, char *);
+extern void list_dir(WINDOW *, struct item *);
+extern struct item *search(struct item *, char *);
+extern struct item *mkdir(WINDOW *, struct item *, struct list *, char *);
 
 #endif

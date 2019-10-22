@@ -1,6 +1,6 @@
 #include "system.h"
 
-struct args *flags(char *line)
+struct args *flags(WINDOW *window, char *line)
 {
 	struct args *flags = malloc(sizeof(struct args));
 	char *word = malloc(sizeof(char) * LINE_BUF_SIZE);
@@ -47,9 +47,27 @@ struct args *flags(char *line)
 	return flags;
 }
 
-struct item *parser(char *input)
+struct item *parser(WINDOW *window, struct item *root, struct item *curr, char *input)
 {
-	wprintw(window, "Parsed\n");
+	struct args *cmds = flags(window, input);
+	char **tokens = cmds->flags;
+	int count = cmds->argc;
+
+	if (count == 0)
+		return NULL;
+
+	if (strcmp(tokens[0], "exit") == 0) {
+		status = QUIT;
+	} else if (strcmp(tokens[0], "mkdir") == 0) {
+		if (count > 1)
+			mkdir(window, curr, NULL, tokens[1]);
+		else
+			wprintw(window, "mkdir: missing operand\n");
+	} else if (strcmp(tokens[0], "ls") == 0) {
+		list_dir(window, curr);
+	} else {
+		wprintw(window, "%s: command not found\n", tokens[0]);
+	}
 
 	return NULL;
 }

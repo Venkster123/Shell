@@ -53,7 +53,7 @@ struct item *touch(struct item *curr, char *name)
     strcat(file->path, name);
 
     node = init(file);
-    curr->items = append(curr->items, node);
+    append(curr->items, node);
 
     return file;
 }
