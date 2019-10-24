@@ -79,7 +79,7 @@ extern char *get(WINDOW *);
 // list.c functions
 extern void sort(struct list *);
 extern struct list *init(struct item *);
-extern void append(struct list *, struct list *);
+extern struct list *append(struct list *, struct list *);
 
 // dir.c functions
 extern void list_dir(WINDOW *, struct item *);

@@ -1,4 +1,5 @@
 #include "system.h"
+//#include "debug.h"
 
 struct item *mkdir(WINDOW *window, struct item *curr, struct list *items, char *name)
 {
@@ -31,6 +32,9 @@ struct item *mkdir(WINDOW *window, struct item *curr, struct list *items, char *
 	dir->size = 0;
 	dir->nitem = 0;
 
+	dir->name = malloc(sizeof(char) * NAME_BUF_SIZE);
+	strcat(dir->name, name);
+
 	if (curr != NULL) {
 		dir->path = malloc(sizeof(char) * NAME_BUF_SIZE);
 		strcat(dir->path, curr->path);
@@ -42,8 +46,9 @@ struct item *mkdir(WINDOW *window, struct item *curr, struct list *items, char *
 
 	if (curr != NULL) {
 		temp = init(dir);
-		append(curr->items, temp);
-		sort(curr->items);
+		//println(window, temp);
+		curr->items = append(curr->items, temp);
+		//sort(curr->items);
 	}
 
 	return dir;
@@ -69,12 +74,15 @@ void list_dir(WINDOW *window, struct item *curr)
 	struct list *head = curr->items;
 	bool end = false;
 
+	wprintw(window, "Listing directory\n");
+
 	if (curr->header == FILE_H) {
 		wprintw(window, "%s\n", curr->name);
 		return;
 	}
 
 	while (head != NULL) {
+		wprintw(window, "Looping\n");
 		end = (head->next == NULL);
 		wprintw(window, "%s%c", head->curr->name, (end) ? '\n' : '\t');
 	}

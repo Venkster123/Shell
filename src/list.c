@@ -1,4 +1,5 @@
 #include "system.h"
+#include "debug.h"
 
 struct list *init(struct item *val)
 {
@@ -11,15 +12,19 @@ struct list *init(struct item *val)
     return node;
 }
 
-void append(struct list *head, struct list *node)
+struct list *append(struct list *head, struct list *node)
 {
     struct list *start = head;
 
-    if (head != NULL) {
-	    while (start->next != NULL)
-		start = start->next;
+    if (start != NULL) {
+	    while (start->next != NULL) {
+		    println(stdscr, start);
+		    start = start->next;
+	    }
 	    start->next = node;
     }
+
+    return head;
 }
 
 void sort(struct list *head)
