@@ -1,0 +1,9 @@
+
+
+struct pack {
+}
+
+int main()
+{
+
+}
