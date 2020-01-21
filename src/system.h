@@ -43,13 +43,13 @@ struct date {
 };
 
 struct item {
-    size_t size;
-    size_t nitem;
-    char *name;
-    char *path;
-    char *contents;
-    __uint8_t header;
-    __uint8_t pstatus;
+    size_t size; // size
+    size_t nitem; // number of items (directory)
+    char *name; // name
+    char *path; // path
+    char *contents; // contents of file (file)
+    __uint8_t header; // type of item (not needed)
+    __uint8_t pstatus; // permission status
     struct date created;
     struct date modded;
     struct list *items;

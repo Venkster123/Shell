@@ -3,6 +3,7 @@
 
 struct item *mkdir(WINDOW *window, struct item *curr, struct list *items, char *name)
 {
+	wprintw(window, "Here");
 	struct list *temp;
 	struct item *dir;
 
