@@ -24,13 +24,17 @@ protected:
 
 	m_perms m_status;
 
+	// later, make sure to
+	// ensure that m_parent
+	// is of class directory
 	item *m_parent;
 public:
-	item(std::string, std::string, m_perms);
 	item(std::string, std::string, m_perms, item);
-	item(std::string, std::string, m_perms, item *);
+	item(std::string, std::string, m_perms, item * = nullptr);
 
-	item(const item &, std::string);
+	item(const item &);
+	item(const item &, std::string, item);
+	item(const item &, std::string, item * = nullptr);
 
 	~item();
 
@@ -52,23 +56,25 @@ public:
 
 	virtual void rename(std::string);
 
-	virtual const item &copy();
+	virtual item copy(std::string) const;
+
+	// Later move add the copied
+	// item into the new directory
+	virtual item copy_to(item, std::string = "") const;
+	virtual item copy_to(item *, std::string = "") const;
+
+	bool operator==(const item &) const;
+	bool operator!=(const item &) const;
 };
 
-item::item(std::string name, std::string path, m_perms status)
+item::item(std::string name, std::string path, m_perms status, item *parent)
 	: m_name(name), m_path(path), m_status(status), m_size(0),
-	m_parent(nullptr), m_created(clock()), m_modified(clock()) {}
+	m_parent(parent), m_created(clock()), m_modified(clock()) {}
 
 item::item(std::string name, std::string path, m_perms status,
 	item parent) : item(name, path, status)
 {
 	m_parent = &parent;
-}
-
-item::item(std::string name, std::string path, m_perms status,
-	item *parent) : item(name, path, status)
-{
-	m_parent = parent;
 }
 
 void item::move(item parent)
@@ -93,6 +99,43 @@ void item::rename(std::string name)
 		m_name = name;
 		m_modified = clock();
 	}
+}
+
+item item::copy(std::string name) const
+{
+	return item(*this, name);
+}
+
+item item::copy_to(item parent, std::string name) const
+{
+	item new_item = item(*this, name);
+	new_item.move(parent);
+	return new_item;
+}
+
+item item::copy_to(item *parent, std::string name) const
+{
+	item new_item = item(*this, name);
+	new_item.move(parent);
+	return new_item;
+}
+
+bool item::operator==(const item &other) const
+{
+	if (m_name == other.m_name
+		&& m_created == other.m_created
+		&& m_modified == other.m_modified
+		&& m_parent == other.m_parent
+		&& m_path == other.m_path
+		&& m_status == other.m_status
+		&& m_size == other.m_size)
+		return true;
+	return false;
+}
+
+bool item::operator!=(const item &other) const
+{
+	return !(*this == other);
 }
 
 #endif
