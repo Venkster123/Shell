@@ -32,4 +32,6 @@ int window::operator()(const char *format, ...)
 	return done;
 }
 
+window win(stdscr);
+
 #endif
