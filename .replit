@@ -1,0 +1,2 @@
+language = "cpp"
+run = "g++ shell/shell.cpp\n./shell/a.out"
