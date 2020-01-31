@@ -19,24 +19,10 @@ public:
 	int_type overflow(int_type c); */
 
 	int printf(const char *, ...);
-
-	// boolean for initscr-ed
-	static bool initialized;
 };
-
-bool window::initialized = false;
 
 window::window(WINDOW *win)
 {
-	using namespace std;
-
-	/*if (!initialized) {
-		initialized = true;
-		initscr();
-	}*/
-
-	initscr();
-
 	m_win = win;
 }
 

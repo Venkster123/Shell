@@ -1,13 +1,26 @@
-#include "window.h"
-#include "ncurses.h"
+#include <ncurses.h>
 
 #include <iostream>
+
+#include "window.h"
 
 using namespace std;
 
 int main()
 {
-	// Test directories and
-	// other classes
-	cout << "hi" << endl;
+	initscr();
+
+	// wprintw(stdscr, "sdfsdfds");
+
+	window scr(stdscr);
+
+	scr("sdfsd");
+	scr.printf("this is a test");
+
+	scr << "fdsfd" << endl;
+
+	refresh();
+	getch();
+
+	endwin();
 }
