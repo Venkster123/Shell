@@ -3,7 +3,9 @@
 
 #include <ostream>
 #include <iostream>
-#include <streambuf>
+#include <sstream>
+#include <string>
+
 #include <ncurses.h>
 
 class window : std::streambuf {
@@ -13,10 +15,6 @@ public:
 	window(WINDOW *);
 
 	int operator()(const char *, ...);
-
-	/* Implement the following later
-	std::streamsize xsputn(const char_type* s, std::streamsize n);
-	int_type overflow(int_type c); */
 
 	int printf(const char *, ...);
 };
@@ -48,6 +46,28 @@ int window::printf(const char *format, ...)
 	va_end(arg);
 
 	return done;
+}
+
+// Global insertion operator overload
+template <class T>
+window &operator<<(window &win, const T &in)
+{
+	std::ostringstream oss;
+
+	oss << in;
+	win(oss.str().c_str());
+
+	return win;
+}
+
+// Define endl for windows
+window &w_endl(window &win)
+{
+	// For now, simply do newline,
+	// later actualyl flush output
+	win("\n");
+	refresh();
+	return win;
 }
 
 #endif

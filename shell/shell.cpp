@@ -17,7 +17,7 @@ int main()
 	scr("sdfsd");
 	scr.printf("this is a test");
 
-	scr << "fdsfd" << endl;
+	scr << "\nfdsfd -- " << w_endl << "syay\n";
 
 	refresh();
 	getch();
