@@ -7,11 +7,11 @@
 
 class dir : public item {
 protected:
-	(item *) *m_dir;
+	item **m_dir;
 public:
 	static const std::size_t default_capacity;
 };
 
-static const std::size_t dir::default_capacity = 0x400;
+const std::size_t dir::default_capacity = 0x400;
 
 #endif

@@ -11,6 +11,6 @@ public:
 	static const std::size_t default_capacity;
 };
 
-static const std::size_t file::default_capacity = 0x400;
+const std::size_t file::default_capacity = 0x400;
 
 #endif
