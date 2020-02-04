@@ -5,6 +5,8 @@
 #include <ctime>
 #include <string>
 
+class dir;
+
 class item {
 public:
 	enum m_perms {
@@ -29,14 +31,18 @@ protected:
 	// is of class directory
 	item *m_parent;
 public:
+	item(std::string, item * = nullptr);
 	item(std::string, std::string, m_perms, item);
 	item(std::string, std::string, m_perms, item * = nullptr);
 
-	item(const item &);
+	// item(const item &);
 	item(const item &, std::string, item);
 	item(const item &, std::string, item * = nullptr);
 
-	~item();
+	// ~item();
+
+	std::string name() const;
+	std::string path() const;
 
 	/* Keep the following virtual
 	 * functions virtual to allow
@@ -67,6 +73,16 @@ public:
 	bool operator!=(const item &) const;
 };
 
+item::item(std::string name, item *parent) : m_name(name),
+	m_status(p_user), m_size(0), m_parent(parent),
+	m_created(clock()), m_modified(clock())
+{
+	if (parent == nullptr)
+		m_path = (m_name.empty()) ? "~" : ("~/" + m_name);
+	else
+		m_path = parent->m_path + "/" + m_name;
+}
+
 item::item(std::string name, std::string path, m_perms status, item *parent)
 	: m_name(name), m_path(path), m_status(status), m_size(0),
 	m_parent(parent), m_created(clock()), m_modified(clock()) {}
@@ -75,6 +91,30 @@ item::item(std::string name, std::string path, m_perms status,
 	item parent) : item(name, path, status)
 {
 	m_parent = &parent;
+}
+
+item::item(const item &it, std::string name, item parent)
+{
+	*this = it;
+	m_name = name;
+	m_parent = &parent;
+}
+
+item::item(const item &it, std::string name, item *parent)
+{
+	*this = it;
+	m_name = name;
+	m_parent = parent;
+}
+
+std::string item::name() const
+{
+	return m_name;
+}
+
+std::string item::path() const
+{
+	return m_path;
 }
 
 void item::move(item parent)

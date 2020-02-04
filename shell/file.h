@@ -8,9 +8,21 @@ protected:
 	std::size_t m_capacity;
 	std::string *m_content;
 public:
-	static const std::size_t default_capacity;
+	file(std::string, item * = nullptr);
+	file(std::string, std::string, m_perms, item);
+	file(std::string, std::string, m_perms, item * = nullptr);
+
+	file(const item &);
+	file(const item &, std::string, item);
+	file(const item &, std::string, item * = nullptr);
 };
 
-const std::size_t file::default_capacity = 0x400;
+file::file(std::string name, item *parent) : item(name, parent) {}
+
+file::file(std::string name, std::string path, m_perms status, item *parent)
+	: item(name, path, status, parent) {}
+
+file::file(std::string name, std::string path, m_perms status,
+	item parent) : item(name, path, status, parent) {}
 
 #endif
