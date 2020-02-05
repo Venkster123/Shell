@@ -89,6 +89,7 @@ std::string window::get_line(m_echo echo_status) const
 			|| ch == KEY_DC) {
 			if (cur_pos > 0) {
 				wprintw(m_win, "\b \b");
+				line.erase(line.length() - 1, 1);
 				cur_pos--;
 			}
 
