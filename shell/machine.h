@@ -19,7 +19,7 @@ class machine {
 	//std::vector <window *> m_windows; list of available windows
 	//std::vector <bool> m_open; reflects whether a window is open or not
 
-	enum m_commands {m_mkdir, m_touch};
+	enum m_commands {m_mkdir, m_touch, m_none};
 public:
 	machine(std::string);
 
@@ -63,9 +63,27 @@ void machine::perform(std::string line)
 		return;
 
 	std::string cmd = flags[0];
-	m_commands type = 
+	m_commands type = get_code(cmd);
+
+	switch (type) {
+	case m_mkdir:
+		break;
+	case m_touch:
+		break;
+	default:
+		m_scr << cmd << ": command not found";
+		m_scr << window::w_endl;
+		break;
+	}
 }
 
-void machine::get_code(std::)
+void machine::m_commands get_code(std::string cmd)
+{
+	if (cmd == "mkdir")
+		return m_mkdir;
+	if (cmd == "touch")
+		return m_touch;
+	return m_none;
+}
 
 #endif
